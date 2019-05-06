@@ -4,7 +4,13 @@ Some sample of package `net/http`
 
 ## Requirement
 
-- Go:`1.12+`
+- Go:`1.11+`
+
+Recommend:
+
+- Go:`1.12.4 or higner`
+- IDE:`GoLand`
+- CGO:`Disabled`
 
 ## Index
 

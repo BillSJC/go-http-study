@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -19,7 +20,21 @@ func main() {
 			panic(err)
 		}
 	})
+	http.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			if err := recover(); err != nil {
+				fmt.Println(err)
+			}
+		}()
+		data := r.PostForm.Get("data")
+		m := map[string]string{"data": data}
+		dataB, err := json.Marshal(m)
+		if err != nil {
+			panic(err)
+		}
+		_, _ = fmt.Fprintln(w, dataB)
+	})
 	//listen and serve
-	go http.ListenAndServe("127.0.0.0:8000", nil)
-
+	err := http.ListenAndServe(":8000", nil)
+	fmt.Println(err)
 }
